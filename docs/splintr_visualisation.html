@@ -359,7 +359,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -370,8 +370,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -384,9 +384,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>SPLINTR-project/</code> <span
@@ -409,21 +409,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -514,15 +511,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree0d9c333d15de77d7f6d50efac99d1a62251b48cctargetblank0d9c333a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree67e383bf755db05233522424ab2da45fb4f8879etargetblank67e383ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/kitadalvi/SPLINTR-project/tree/0d9c333d15de77d7f6d50efac99d1a62251b48cc" target="_blank">0d9c333</a>
+<a href="https://github.com/kitadalvi/SPLINTR-project/tree/67e383bf755db05233522424ab2da45fb4f8879e" target="_blank">67e383b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree0d9c333d15de77d7f6d50efac99d1a62251b48cctargetblank0d9c333a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree67e383bf755db05233522424ab2da45fb4f8879etargetblank67e383ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -532,7 +529,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/kitadalvi/SPLINTR-project/tree/0d9c333d15de77d7f6d50efac99d1a62251b48cc" target="_blank">0d9c333</a>.
+<a href="https://github.com/kitadalvi/SPLINTR-project/tree/67e383bf755db05233522424ab2da45fb4f8879e" target="_blank">67e383b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -549,10 +546,6 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Unstaged changes:
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/splintr_visualisation.Rmd
 
 </code></pre>
 <p>
@@ -598,6 +591,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/analysis/splintr_visualisation.Rmd" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+<td>
+Finalised QC and comments
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kitadalvi/SPLINTR-project/67e383bf755db05233522424ab2da45fb4f8879e/docs/splintr_visualisation.html" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+<td>
+Finalised QC and comments
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -730,6 +757,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-2.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-2.png" target="_blank">0d9c333</a>
 </td>
 <td>
@@ -769,6 +807,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-3.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-3.png" target="_blank">0d9c333</a>
@@ -812,6 +861,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-4.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-4.png" target="_blank">0d9c333</a>
 </td>
 <td>
@@ -853,6 +913,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-5.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-5.png" target="_blank">0d9c333</a>
 </td>
 <td>
@@ -876,6 +947,43 @@ at least 5 barcodes in a minimum of 1 sample.</p>
 <div id="raw" class="section level4">
 <h4>Raw</h4>
 <p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-4-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="normalised" class="section level4">
 <h4>Normalised</h4>
@@ -902,6 +1010,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-5-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-5-1.png" target="_blank">0d9c333</a>
@@ -948,6 +1067,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-6-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-6-1.png" target="_blank">0d9c333</a>
 </td>
 <td>
@@ -962,6 +1092,43 @@ kitadalvi
 </div>
 </div>
 <p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
+Past versions of unnamed-chunk-6-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-6-2.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="by-count" class="section level4">
 <h4>by count</h4>
@@ -988,6 +1155,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-7-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-7-1.png" target="_blank">0d9c333</a>
@@ -1026,6 +1204,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-7-2.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-7-2.png" target="_blank">0d9c333</a>
@@ -1078,6 +1267,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-9-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-9-1.png" target="_blank">0d9c333</a>
 </td>
 <td>
@@ -1095,6 +1295,43 @@ kitadalvi
 <div id="collapsed" class="section level4">
 <h4>Collapsed</h4>
 <p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-10-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="barcode-plot" class="section level3 tabset">
@@ -1102,10 +1339,84 @@ kitadalvi
 <div id="individual-1" class="section level4">
 <h4>Individual</h4>
 <p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-11-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="collapsed-1" class="section level4">
 <h4>Collapsed</h4>
 <p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-12-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="section" class="section level3">
@@ -1120,10 +1431,84 @@ this early stage.</p>
 <div id="sample" class="section level4">
 <h4>Sample</h4>
 <p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-13-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="organoid" class="section level4">
 <h4>Organoid</h4>
 <p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/67e383bf755db05233522424ab2da45fb4f8879e/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-14-1.png" target="_blank">67e383b</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="section-1" class="section level3">
@@ -1132,24 +1517,6 @@ this early stage.</p>
 clustering by organoid type (PC2) which accounts for 2% of variance.
 Further attributes to be considered include: batch, when additional
 SPLINTR samples are run/sequenced.</p>
-</div>
-</div>
-<div id="analysing-composition-and-diversity" class="section level2">
-<h2>Analysing composition and diversity</h2>
-<div id="identify-compositional-bias-within-samples"
-class="section level3">
-<h3>Identify compositional bias within samples</h3>
-</div>
-<div id="identifying-abundant-barcodes-within-samples"
-class="section level3">
-<h3>Identifying abundant barcodes within samples</h3>
-</div>
-<div id="calculating-and-plotting-percentile-abundance"
-class="section level3">
-<h3>Calculating and plotting percentile abundance</h3>
-</div>
-<div id="diversity-analysis" class="section level3">
-<h3>Diversity analysis</h3>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
