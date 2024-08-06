@@ -418,10 +418,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -514,13 +514,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong1c78863">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree0d9c333d15de77d7f6d50efac99d1a62251b48cctargetblank0d9c333a">
 <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong> 1c78863
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/kitadalvi/SPLINTR-project/tree/0d9c333d15de77d7f6d50efac99d1a62251b48cc" target="_blank">0d9c333</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong1c78863"
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree0d9c333d15de77d7f6d50efac99d1a62251b48cctargetblank0d9c333a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -529,7 +531,8 @@ and connecting the code version to the results is critical for
 reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version 1c78863.
+The results in this page were generated with repository version
+<a href="https://github.com/kitadalvi/SPLINTR-project/tree/0d9c333d15de77d7f6d50efac99d1a62251b48cc" target="_blank">0d9c333</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -547,8 +550,9 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
-Untracked files:
-    Untracked:  analysis/splintr_visualisation.Rmd
+Unstaged changes:
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/splintr_visualisation.Rmd
 
 </code></pre>
 <p>
@@ -563,74 +567,589 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/splintr_visualisation.Rmd</code>)
+and HTML (<code>docs/splintr_visualisation.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/analysis/splintr_visualisation.Rmd" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+<td>
+Initial commit
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kitadalvi/SPLINTR-project/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/splintr_visualisation.html" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+<td>
+Initial commit
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <div id="importing-rna-barcode-count-data" class="section level2">
 <h2>Importing RNA barcode count data</h2>
+<pre class="r"><code>samplesheet &lt;-readxl::read_excel(&quot;/Volumes/bioinf/home/ndalvi/SPLINTR/Data/samplesheet.xlsx&quot;)
+samplesheet &lt;- as.data.frame(samplesheet)
+rownames(samplesheet) &lt;- samplesheet$sample
+
+#barcode DGE
+rawdata &lt;- read.delim(&quot;/Volumes/bioinf/home/ndalvi/SPLINTR/Results/reverse_complement_2/counts/all_counts_combined.tsv&quot;, check.names = FALSE, stringsAsFactors = FALSE)
+barcode_data &lt;- DGEList(counts=rawdata[,2:5])
+rownames(barcode_data$counts)&lt;- rawdata[,1]
+
+#adding samplesheet information to DGElist object
+barcode_data$samples$Sample &lt;- samplesheet$Sample
+barcode_data$samples$ORG &lt;- samplesheet$ORG
+barcode_data$samples$Batch &lt;- samplesheet$Batch</code></pre>
 </div>
 <div id="data-qc-and-normalisation" class="section level2">
 <h2>Data QC and normalisation</h2>
+<div id="barcode-thresholds" class="section level3">
+<h3>Barcode thresholds</h3>
+<p>Visualizing the effect of different threshold parameters on barcode
+data for subsequent normalisation.</p>
+<pre><code>[1] &quot;DGEList dimensions pre- and post-threshold&quot;</code></pre>
 <pre><code>[1] 523   4
 [1] 523   4</code></pre>
 <p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] 523   4
-[1] 193   4</code></pre>
-<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] 523   4
-[1] 126   4</code></pre>
-<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] 523   4
-[1] 523   4</code></pre>
-<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] 523   4
-[1] 0 4</code></pre>
-<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Comments: ———————-</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-1.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;DGEList dimensions pre- and post-threshold&quot;</code></pre>
 <pre><code>[1] 523   4
 [1] 288   4</code></pre>
-<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-3-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-3-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-3-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-3-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-3-6.png" width="672" style="display: block; margin: auto;" />
-### Collapse PCR replicates in object</p>
-<pre><code>[1] 288   4</code></pre>
-<pre><code>An object of class &quot;DGEList&quot;
-$counts
-                                   ORG38 ORG49
-SPLINTR_mCHERRY_V2_Barcode_1006414   3.0   0.0
-SPLINTR_mCHERRY_V2_Barcode_1018818   3.0   4.0
-SPLINTR_mCHERRY_V2_Barcode_1030757  30.5  32.5
-SPLINTR_mCHERRY_V2_Barcode_1032816   0.0   3.5
-SPLINTR_mCHERRY_V2_Barcode_1034596   1.5   5.0
-SPLINTR_mCHERRY_V2_Barcode_1035827   0.0   2.5
-
-$samples
-      group lib.size norm.factors        Sample   ORG Batch        Sample
-ORG38     1     4883            1 ORG38splA_S30 ORG38     1 ORG49splB_S34
-ORG49     1     5320            1 ORG49splA_S33 ORG49     1 ORG49splA_S33
-      BC.count
-ORG38       92
-ORG49      103</code></pre>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-2">
+Past versions of unnamed-chunk-2-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-2.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;DGEList dimensions pre- and post-threshold&quot;</code></pre>
+<pre><code>[1] 523   4
+[1] 193   4</code></pre>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-3">
+Past versions of unnamed-chunk-2-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-3.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;DGEList dimensions pre- and post-threshold&quot;</code></pre>
+<pre><code>[1] 523   4
+[1] 126   4</code></pre>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-4">
+Past versions of unnamed-chunk-2-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-4.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;DGEList dimensions pre- and post-threshold&quot;</code></pre>
+<pre><code>[1] 523   4
+[1] 523   4</code></pre>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-2-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-5">
+Past versions of unnamed-chunk-2-5.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-2-5.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Comments: Continuing QC and normalisation with absolute threshold of
+at least 5 barcodes in a minimum of 1 sample.</p>
+</div>
+<div id="normalisation" class="section level3 tabset">
+<h3 class="tabset">Normalisation</h3>
+<pre><code>[1] 523   4
+[1] 288   4</code></pre>
+<div id="raw" class="section level4">
+<h4>Raw</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="normalised" class="section level4">
+<h4>Normalised</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-5-1.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="counts-per-barcode" class="section level3 tabset">
+<h3 class="tabset">Counts per barcode</h3>
+<div id="by-frequency" class="section level4">
+<h4>by frequency</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-6-1.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="by-count" class="section level4">
+<h4>by count</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-7-1.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-2">
+Past versions of unnamed-chunk-7-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-7-2.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="visualisation" class="section level2">
 <h2>Visualisation</h2>
-<div id="bubble-plot" class="section level3">
-<h3>Bubble Plot</h3>
-<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
-Bubble plot arranged according to frequency in org38splA_S30:
-<img src="figure/splintr_visualisation.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
-### Barcode Plot
-<img src="figure/splintr_visualisation.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" />
-### Timeseries Plots
-<img src="figure/splintr_visualisation.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
-### Principal Components Analysis
-<img src="figure/splintr_visualisation.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
-## Analysing composition and diversity ### Identify compositional bias
-within samples ### Identifying abundant barcodes within samples ###
-Calculating and plotting percentile abundance ### Diversity analysis</p>
+<div id="bubble-plot" class="section level3 tabset">
+<h3 class="tabset">Bubble Plot</h3>
+<p>Note: In “collapsed” plots, SPLINTR replicates have been collapsed
+into a single variable so that results for a given ORG (eg. ORG38,
+ORG49) sample represent the mean of all of it’s replicates.</p>
+<div id="individual" class="section level4">
+<h4>Individual</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/kitadalvi/SPLINTR-project/blob/0d9c333d15de77d7f6d50efac99d1a62251b48cc/docs/figure/splintr_visualisation.Rmd/unnamed-chunk-9-1.png" target="_blank">0d9c333</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="collapsed" class="section level4">
+<h4>Collapsed</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="barcode-plot" class="section level3 tabset">
+<h3 class="tabset">Barcode Plot</h3>
+<div id="individual-1" class="section level4">
+<h4>Individual</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="collapsed-1" class="section level4">
+<h4>Collapsed</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="section" class="section level3">
+<h3></h3>
+<p>Comments: Overall, barcode composition comparison of both individual
+replicates (38splA vs 49splA, and 38splB vs 49splB) and collapsed
+samples (ORG38 vs ORG49) do not show much variation which is expected at
+this early stage.</p>
+</div>
+<div id="principal-components-analysis" class="section level3 tabset">
+<h3 class="tabset">Principal Components Analysis</h3>
+<div id="sample" class="section level4">
+<h4>Sample</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="organoid" class="section level4">
+<h4>Organoid</h4>
+<p><img src="figure/splintr_visualisation.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="section-1" class="section level3">
+<h3></h3>
+<p>Comments: PCA plots show no clustering by sample (PC1) by do show
+clustering by organoid type (PC2) which accounts for 2% of variance.
+Further attributes to be considered include: batch, when additional
+SPLINTR samples are run/sequenced.</p>
+</div>
+</div>
+<div id="analysing-composition-and-diversity" class="section level2">
+<h2>Analysing composition and diversity</h2>
+<div id="identify-compositional-bias-within-samples"
+class="section level3">
+<h3>Identify compositional bias within samples</h3>
+</div>
+<div id="identifying-abundant-barcodes-within-samples"
+class="section level3">
+<h3>Identifying abundant barcodes within samples</h3>
+</div>
+<div id="calculating-and-plotting-percentile-abundance"
+class="section level3">
+<h3>Calculating and plotting percentile abundance</h3>
+</div>
+<div id="diversity-analysis" class="section level3">
+<h3>Diversity analysis</h3>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

@@ -18,7 +18,7 @@ library(readxl)
 ```
 
 ## Importing RNA barcode count data
-```{r}
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
 samplesheet <-readxl::read_excel("/Volumes/bioinf/home/ndalvi/SPLINTR/Data/samplesheet.xlsx")
 samplesheet <- as.data.frame(samplesheet)
 rownames(samplesheet) <- samplesheet$sample
@@ -34,10 +34,14 @@ barcode_data$samples$ORG <- samplesheet$ORG
 barcode_data$samples$Batch <- samplesheet$Batch
 ```
 ## Data QC and normalisation
-```{r}
+### Barcode thresholds
+Visualizing the effect of different threshold parameters on barcode data for subsequent normalisation.
+```{r, message=FALSE, warning=FALSE}
+
 #removing barcodes with no data 
 barcode_data <- barcode_data[rowSums(barcode_data$counts) != 0, ]
 
+print("DGEList dimensions pre- and post-threshold")
 thresholdCounts(
   barcode_data,
   type = "absolute",
@@ -47,6 +51,17 @@ thresholdCounts(
   group = "ORG"
 )
 
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  barcode_data,
+  type = "absolute",
+  threshold = 5,
+  minSamples = 1,
+  plot = T,
+  group = "ORG"
+)
+
+print("DGEList dimensions pre- and post-threshold")
 thresholdCounts(
   barcode_data,
   type = "absolute",
@@ -56,6 +71,7 @@ thresholdCounts(
   group = "ORG"
 )
 
+print("DGEList dimensions pre- and post-threshold")
 thresholdCounts(
   barcode_data,
   type = "absolute",
@@ -65,6 +81,7 @@ thresholdCounts(
   group = "ORG"
 )
 
+print("DGEList dimensions pre- and post-threshold")
 thresholdCounts(
   barcode_data,
   type = "relative",
@@ -74,18 +91,12 @@ thresholdCounts(
   group = "ORG"
 )
 
-thresholdCounts(
-  barcode_data,
-  type = "relative",
-  threshold = 1e-5,
-  minSamples = 3,
-  plot = T,
-  group = "ORG"
-)
 ```
 
-Comments: ----------------------
+Comments: Continuing QC and normalisation with absolute threshold of at least 5 barcodes in a minimum of 1 sample. 
 
+
+### Normalisation {.tabset}
 ```{r message=FALSE, warning=FALSE}
 dge.filtered <-
   thresholdCounts(
@@ -98,67 +109,87 @@ dge.filtered <-
 
 #normalise samples from sequencing depth to CPM
 dge.cpmnorm <- normaliseCounts(dge.filtered, method = "CPM")
+```
 
+#### Raw 
+```{r}
 #plot raw and normalised sequencing depth to get an idea of depth discrepancies between PCR replicates
-
 # raw counts per sample
 plotReadCounts(dge.filtered, group = "ORG")
+```
 
+#### Normalised
+```{r}
 # normalised counts per sample
 plotReadCounts(dge.cpmnorm, group = "ORG")
+```
 
+### Counts per barcode {.tabset}
+#### by frequency 
+```{r}
 # plot detected barcodes ordered by frequency in reference library
 plotBarcodeCounts(dge.cpmnorm, log10 = F)
 
 # plot log10 barcode counts
 plotBarcodeCounts(dge.cpmnorm, log10 = T)
+```
 
+#### by count
+```{r}
 # order barcodes by count across samples
 plotBarcodeCounts(dge.cpmnorm, log10 = F, order = T)
 
 # order barcodes by count across samples with log norm
 plotBarcodeCounts(dge.cpmnorm, log10 = T, order = T)
 ```
-### Collapse PCR replicates in object
+
+
+## Visualisation 
 ```{r}
-dim(dge.filtered)
+#collapsing replicates
 dge.filtered.collapsed <- collapseReplicates(
   dge.filtered,
   group = "ORG",
   method = "mean"
 )
-head(dge.filtered.collapsed)
 ```
-## Visualisation 
-### Bubble Plot
+
+### Bubble Plot {.tabset}
+Note: In "collapsed" plots, SPLINTR replicates have been collapsed into a single variable so that results for a given ORG (eg. ORG38, ORG49) sample represent the mean of all of it's replicates.
+
+#### Individual
 ```{r}
 plotBarcodeBubble(dge.filtered, 
                   proportionCutoff = 5, 
                   labelBarcodes = T,
                   group="ORG")
 ```
-Bubble plot arranged according to frequency in org38splA_S30:
+
+#### Collapsed
 ```{r}
-plotOrderedBubble(dge.filtered, 
-                  proportionCutoff = 10, 
-                  labelBarcodes = T, 
-                  orderSample = "ORG38splA_S30", 
-                  colorDominant = F, 
-                  filterCutoff = 0.001,
-                  group = "ORG")
+plotBarcodeBubble(dge.filtered.collapsed, 
+                  proportionCutoff = 5, 
+                  labelBarcodes = T,
+                  group="ORG")
 ```
-### Barcode Plot
+
+### Barcode Plot {.tabset}
+#### Individual
 ```{r}
 plotBarcodeHistogram(dge.filtered, topN = 10, alphaLowFreq = 0)
+```
+
+#### Collapsed
+```{r}
 plotBarcodeHistogram(dge.filtered.collapsed, topN = 10, alphaLowFreq = 0)
 ```
-### Timeseries Plots
-```{r}
-plotBarcodeTimeseries(dge.filtered, 
-                      top = 50, 
-                      seed = 10101)
-```
-### Principal Components Analysis 
+
+### 
+Comments: Overall, barcode composition comparison of both individual replicates (38splA vs 49splA, and 38splB vs 49splB) and collapsed samples (ORG38 vs ORG49) do not show much variation which is expected at this early stage. 
+
+
+### Principal Components Analysis {.tabset}
+#### Sample
 ```{r}
 plotBarcodePCA(dge.filtered, 
                groups = "Sample", 
@@ -166,8 +197,16 @@ plotBarcodePCA(dge.filtered,
                pcs=c(1, 2))
 
 ```
-## Analysing composition and diversity
-### Identify compositional bias within samples
-### Identifying abundant barcodes within samples
-### Calculating and plotting percentile abundance
-### Diversity analysis 
+
+#### Organoid
+```{r}
+plotBarcodePCA(dge.filtered, 
+               groups = "ORG", 
+               ntop = 1000,
+               pcs=c(1, 2))
+
+```
+
+###
+Comments: PCA plots show no clustering by sample (PC1) by do show clustering by organoid type (PC2) which accounts for 2% of variance. Further attributes to be considered include: batch, when additional SPLINTR samples are run/sequenced. 
+
