@@ -359,7 +359,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -370,8 +370,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -384,9 +384,9 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>SPLINTR-project/</code> <span
@@ -409,18 +409,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -511,15 +514,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree67e383bf755db05233522424ab2da45fb4f8879etargetblank67e383ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree80299b8857a0eab074c36718f9f563e3d29de91atargetblank80299b8a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/kitadalvi/SPLINTR-project/tree/67e383bf755db05233522424ab2da45fb4f8879e" target="_blank">67e383b</a>
+<a href="https://github.com/kitadalvi/SPLINTR-project/tree/80299b8857a0eab074c36718f9f563e3d29de91a" target="_blank">80299b8</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree67e383bf755db05233522424ab2da45fb4f8879etargetblank67e383ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomkitadalviSPLINTRprojecttree80299b8857a0eab074c36718f9f563e3d29de91atargetblank80299b8a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -529,7 +532,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/kitadalvi/SPLINTR-project/tree/67e383bf755db05233522424ab2da45fb4f8879e" target="_blank">67e383b</a>.
+<a href="https://github.com/kitadalvi/SPLINTR-project/tree/80299b8857a0eab074c36718f9f563e3d29de91a" target="_blank">80299b8</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -546,6 +549,9 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+
+Unstaged changes:
+    Modified:   analysis/splintr_visualisation.Rmd
 
 </code></pre>
 <p>
@@ -591,6 +597,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/kitadalvi/SPLINTR-project/80299b8857a0eab074c36718f9f563e3d29de91a/docs/splintr_visualisation.html" target="_blank">80299b8</a>
+</td>
+<td>
+kitadalvi
+</td>
+<td>
+2024-08-06
+</td>
+<td>
+Update splintr_visualisation.html
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -937,7 +960,7 @@ kitadalvi
 </table>
 </div>
 </div>
-<p>Comments: Continuing QC and normalisation with absolute threshold of
+<p>Comments:Continuing QC and normalisation with absolute threshold of
 at least 5 barcodes in a minimum of 1 sample.</p>
 </div>
 <div id="normalisation" class="section level3 tabset">
@@ -1037,6 +1060,11 @@ kitadalvi
 </div>
 </div>
 </div>
+</div>
+<div id="section" class="section level3">
+<h3></h3>
+<p>Comments: Overall, ORG49 seems to have better sequencing depth than
+ORG38</p>
 </div>
 <div id="counts-per-barcode" class="section level3 tabset">
 <h3 class="tabset">Counts per barcode</h3>
@@ -1419,12 +1447,13 @@ kitadalvi
 </div>
 </div>
 </div>
-<div id="section" class="section level3">
+<div id="section-1" class="section level3">
 <h3></h3>
-<p>Comments: Overall, barcode composition comparison of both individual
-replicates (38splA vs 49splA, and 38splB vs 49splB) and collapsed
-samples (ORG38 vs ORG49) do not show much variation which is expected at
-this early stage.</p>
+<p>Comments: Overall, barcode composition comparison of individual
+replicates (38splA vs 49splA, and 38splB vs 49splB) do not show much
+variation at this early stage. However, there is some variation between
+collapsed samples (ORG38 vs ORG49) where ORG49 has larger barcode
+diversity than ORG38.</p>
 </div>
 <div id="principal-components-analysis" class="section level3 tabset">
 <h3 class="tabset">Principal Components Analysis</h3>
@@ -1511,10 +1540,10 @@ kitadalvi
 </div>
 </div>
 </div>
-<div id="section-1" class="section level3">
+<div id="section-2" class="section level3">
 <h3></h3>
 <p>Comments: PCA plots show no clustering by sample (PC1) by do show
-clustering by organoid type (PC2) which accounts for 2% of variance.
+clustering by organoid type (PC1) which accounts for 97% of variance.
 Further attributes to be considered include: batch, when additional
 SPLINTR samples are run/sequenced.</p>
 <br>

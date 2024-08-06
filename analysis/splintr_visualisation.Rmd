@@ -93,7 +93,7 @@ thresholdCounts(
 
 ```
 
-Comments: Continuing QC and normalisation with absolute threshold of at least 5 barcodes in a minimum of 1 sample. 
+Comments:Continuing QC and normalisation with absolute threshold of at least 5 barcodes in a minimum of 1 sample. 
 
 
 ### Normalisation {.tabset}
@@ -123,6 +123,10 @@ plotReadCounts(dge.filtered, group = "ORG")
 # normalised counts per sample
 plotReadCounts(dge.cpmnorm, group = "ORG")
 ```
+
+###
+Comments: Overall, ORG49 seems to have better sequencing depth than ORG38 
+
 
 ### Counts per barcode {.tabset}
 #### by frequency 
@@ -185,7 +189,7 @@ plotBarcodeHistogram(dge.filtered.collapsed, topN = 10, alphaLowFreq = 0)
 ```
 
 ### 
-Comments: Overall, barcode composition comparison of both individual replicates (38splA vs 49splA, and 38splB vs 49splB) and collapsed samples (ORG38 vs ORG49) do not show much variation which is expected at this early stage. 
+Comments: Overall, barcode composition comparison of individual replicates (38splA vs 49splA, and 38splB vs 49splB) do not show much variation at this early stage. However, there is some variation between collapsed samples (ORG38 vs ORG49) where ORG49 has larger barcode diversity than ORG38. 
 
 
 ### Principal Components Analysis {.tabset}
@@ -208,5 +212,5 @@ plotBarcodePCA(dge.filtered,
 ```
 
 ###
-Comments: PCA plots show no clustering by sample (PC1) by do show clustering by organoid type (PC2) which accounts for 2% of variance. Further attributes to be considered include: batch, when additional SPLINTR samples are run/sequenced. 
+Comments: PCA plots show no clustering by sample (PC1) by do show clustering by organoid type (PC1) which accounts for 97% of variance. Further attributes to be considered include: batch, when additional SPLINTR samples are run/sequenced. 
 
