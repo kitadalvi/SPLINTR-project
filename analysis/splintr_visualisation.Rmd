@@ -212,5 +212,5 @@ plotBarcodePCA(dge.filtered,
 ```
 
 ###
-Comments: PCA plots show no clustering by sample (PC1) by do show clustering by organoid type (PC1) which accounts for 97% of variance. Further attributes to be considered include: batch, when additional SPLINTR samples are run/sequenced. 
+Comments: PCA plots show no clustering by sample (PC2) by do show clustering by organoid type (PC1) which accounts for 97% of variance. Further attributes to be considered include: batch, when additional SPLINTR samples are run/sequenced. 
 
