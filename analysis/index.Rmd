@@ -9,3 +9,5 @@ editor_options:
 ---
 
 Welcome to my research website.
+
+[SPLINTR Visualisation 6/8/24](splintr_visualisation.Rmd)

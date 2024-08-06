@@ -1,0 +1,173 @@
+---
+title: "Visualisation"
+output: html_document
+date: "2024-07-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+library(edgeR)
+library(limma)
+library(ComplexHeatmap)
+library(bartools)
+library(readxl)
+```
+
+## Importing RNA barcode count data
+```{r}
+samplesheet <-readxl::read_excel("/Volumes/bioinf/home/ndalvi/SPLINTR/Data/samplesheet.xlsx")
+samplesheet <- as.data.frame(samplesheet)
+rownames(samplesheet) <- samplesheet$sample
+
+#barcode DGE
+rawdata <- read.delim("/Volumes/bioinf/home/ndalvi/SPLINTR/Results/reverse_complement_2/counts/all_counts_combined.tsv", check.names = FALSE, stringsAsFactors = FALSE)
+barcode_data <- DGEList(counts=rawdata[,2:5])
+rownames(barcode_data$counts)<- rawdata[,1]
+
+#adding samplesheet information to DGElist object
+barcode_data$samples$Sample <- samplesheet$Sample
+barcode_data$samples$ORG <- samplesheet$ORG
+barcode_data$samples$Batch <- samplesheet$Batch
+```
+## Data QC and normalisation
+```{r}
+#removing barcodes with no data 
+barcode_data <- barcode_data[rowSums(barcode_data$counts) != 0, ]
+
+thresholdCounts(
+  barcode_data,
+  type = "absolute",
+  threshold = 1,
+  minSamples = 1,
+  plot = T,
+  group = "ORG"
+)
+
+thresholdCounts(
+  barcode_data,
+  type = "absolute",
+  threshold = 10,
+  minSamples = 1,
+  plot = T,
+  group = "ORG"
+)
+
+thresholdCounts(
+  barcode_data,
+  type = "absolute",
+  threshold = 10,
+  minSamples = 2,
+  plot = T,
+  group = "ORG"
+)
+
+thresholdCounts(
+  barcode_data,
+  type = "relative",
+  threshold = 1e-10,
+  minSamples = 1,
+  plot = T,
+  group = "ORG"
+)
+
+thresholdCounts(
+  barcode_data,
+  type = "relative",
+  threshold = 1e-5,
+  minSamples = 3,
+  plot = T,
+  group = "ORG"
+)
+```
+
+Comments: ----------------------
+
+```{r message=FALSE, warning=FALSE}
+dge.filtered <-
+  thresholdCounts(
+    barcode_data,
+    type = "absolute",
+    threshold = 5,
+    minSamples = 1,
+    plot = F
+  )
+
+#normalise samples from sequencing depth to CPM
+dge.cpmnorm <- normaliseCounts(dge.filtered, method = "CPM")
+
+#plot raw and normalised sequencing depth to get an idea of depth discrepancies between PCR replicates
+
+# raw counts per sample
+plotReadCounts(dge.filtered, group = "ORG")
+
+# normalised counts per sample
+plotReadCounts(dge.cpmnorm, group = "ORG")
+
+# plot detected barcodes ordered by frequency in reference library
+plotBarcodeCounts(dge.cpmnorm, log10 = F)
+
+# plot log10 barcode counts
+plotBarcodeCounts(dge.cpmnorm, log10 = T)
+
+# order barcodes by count across samples
+plotBarcodeCounts(dge.cpmnorm, log10 = F, order = T)
+
+# order barcodes by count across samples with log norm
+plotBarcodeCounts(dge.cpmnorm, log10 = T, order = T)
+```
+### Collapse PCR replicates in object
+```{r}
+dim(dge.filtered)
+dge.filtered.collapsed <- collapseReplicates(
+  dge.filtered,
+  group = "ORG",
+  method = "mean"
+)
+head(dge.filtered.collapsed)
+```
+## Visualisation 
+### Bubble Plot
+```{r}
+plotBarcodeBubble(dge.filtered, 
+                  proportionCutoff = 5, 
+                  labelBarcodes = T,
+                  group="ORG")
+```
+Bubble plot arranged according to frequency in org38splA_S30:
+```{r}
+plotOrderedBubble(dge.filtered, 
+                  proportionCutoff = 10, 
+                  labelBarcodes = T, 
+                  orderSample = "ORG38splA_S30", 
+                  colorDominant = F, 
+                  filterCutoff = 0.001,
+                  group = "ORG")
+```
+### Barcode Plot
+```{r}
+plotBarcodeHistogram(dge.filtered, topN = 10, alphaLowFreq = 0)
+plotBarcodeHistogram(dge.filtered.collapsed, topN = 10, alphaLowFreq = 0)
+```
+### Timeseries Plots
+```{r}
+plotBarcodeTimeseries(dge.filtered, 
+                      top = 50, 
+                      seed = 10101)
+```
+### Principal Components Analysis 
+```{r}
+plotBarcodePCA(dge.filtered, 
+               groups = "Sample", 
+               ntop = 1000,
+               pcs=c(1, 2))
+
+```
+## Analysing composition and diversity
+### Identify compositional bias within samples
+### Identifying abundant barcodes within samples
+### Calculating and plotting percentile abundance
+### Diversity analysis 
