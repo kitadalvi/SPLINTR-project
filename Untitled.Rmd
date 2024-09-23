@@ -1,0 +1,237 @@
+---
+title: "SPLINTR plasmid analysis"
+output: html_document
+date: "2024-09-13"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+library(edgeR)
+library(limma)
+library(ComplexHeatmap)
+library(bartools)
+library(readxl)
+```
+
+```{r}
+#Diluted
+diluted_samplesheet <-readxl::read_excel("/Volumes/bioinf/home/ndalvi/SPLINTR/diluted_samples/diluted_samplesheet.xlsx")
+diluted_samplesheet <- as.data.frame(diluted_samplesheet)
+rownames(diluted_samplesheet) <- diluted_samplesheet$Sample
+
+#barcode DGE
+diluted_rawdata <- read.delim("/Volumes/bioinf/home/ndalvi/SPLINTR/diluted_samples/results/counts/all_counts_combined.tsv", check.names = FALSE, stringsAsFactors = FALSE)
+diluted_barcode_data <- DGEList(counts=diluted_rawdata[,2:5])
+rownames(diluted_barcode_data$counts)<- diluted_rawdata[,1]
+
+#adding samplesheet information to DGElist object
+diluted_barcode_data$samples$Sample <- diluted_samplesheet$Sample
+diluted_barcode_data$samples$Type <- diluted_samplesheet$sample_type
+diluted_barcode_data$samples$Batch <- diluted_samplesheet$Batch
+
+#undiluted
+undiluted_samplesheet <-readxl::read_excel("/Volumes/bioinf/home/ndalvi/SPLINTR/undiluted_samples/undiluted_samplesheet.xlsx")
+undiluted_samplesheet <- as.data.frame(undiluted_samplesheet)
+rownames(undiluted_samplesheet) <- undiluted_samplesheet$Sample
+
+#barcode DGE
+undiluted_rawdata <- read.delim("/Volumes/bioinf/home/ndalvi/SPLINTR/undiluted_samples/results/counts/all_counts_combined.tsv", check.names = FALSE, stringsAsFactors = FALSE)
+undiluted_barcode_data <- DGEList(counts=undiluted_rawdata[,2:5])
+rownames(undiluted_barcode_data$counts)<- undiluted_rawdata[,1]
+
+#adding samplesheet information to DGElist object
+undiluted_barcode_data$samples$Sample <- undiluted_samplesheet$Sample
+undiluted_barcode_data$samples$Type <- undiluted_samplesheet$sample_type
+undiluted_barcode_data$samples$Batch <- undiluted_samplesheet$Batch
+
+```
+
+## Data QC and normalisation 
+### Barcode thresholds {.tabset}
+Visualizing the effect of different threshold parameters on barcode data for subsequent normalisation.
+
+#### Diluted
+```{r, message=FALSE, warning=FALSE}
+#removing barcodes with no data 
+diluted_barcode_data <- diluted_barcode_data[rowSums(diluted_barcode_data$counts) != 0, ]
+
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  diluted_barcode_data,
+  type = "absolute",
+  threshold = 1,
+  minSamples = 1,
+  plot = T,
+  group = "Type"
+)
+
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  diluted_barcode_data,
+  type = "absolute",
+  threshold = 5,
+  minSamples = 1,
+  plot = T,
+  group = "Type"
+)
+
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  diluted_barcode_data,
+  type = "absolute",
+  threshold = 10,
+  minSamples = 1,
+  plot = T,
+  group = "Type"
+)
+
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  diluted_barcode_data,
+  type = "relative",
+  threshold = 1e-10,
+  minSamples = 1,
+  plot = T,
+  group = "Type"
+)
+```
+
+#### Undiluted
+```{r, message=FALSE, warning=FALSE}
+#removing barcodes with no data 
+undiluted_barcode_data <- undiluted_barcode_data[rowSums(undiluted_barcode_data$counts) != 0, ]
+
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  undiluted_barcode_data,
+  type = "absolute",
+  threshold = 1,
+  minSamples = 1,
+  plot = T,
+  group = "Type"
+)
+
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  undiluted_barcode_data,
+  type = "absolute",
+  threshold = 5,
+  minSamples = 1,
+  plot = T,
+  group = "Type"
+)
+
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  undiluted_barcode_data,
+  type = "absolute",
+  threshold = 10,
+  minSamples = 1,
+  plot = T,
+  group = "Type"
+)
+
+print("DGEList dimensions pre- and post-threshold")
+thresholdCounts(
+  undiluted_barcode_data,
+  type = "relative",
+  threshold = 1e-10,
+  minSamples = 1,
+  plot = T,
+  group = "Type"
+)
+```
+
+### Normalisation {.tabset}
+#### Diluted
+```{r message=FALSE, warning=FALSE}
+diluted.filtered <-
+  thresholdCounts(
+    diluted_barcode_data,
+    type = "absolute",
+    threshold = 5,
+    minSamples = 1,
+    plot = F
+  )
+
+#normalise samples from sequencing depth to CPM
+diluted.cpmnorm <- normaliseCounts(diluted.filtered, method = "CPM")
+```
+
+##### Raw 
+```{r}
+#plot raw and normalised sequencing depth to get an idea of depth discrepancies between PCR replicates
+# raw counts per sample
+plotReadCounts(diluted.filtered, group = "Type")
+```
+
+##### Normalised
+```{r}
+# normalised counts per sample
+plotReadCounts(diluted.cpmnorm, group = "Type")
+```
+
+#### Undiluted
+```{r message=FALSE, warning=FALSE}
+undiluted.filtered <-
+  thresholdCounts(
+    undiluted_barcode_data,
+    type = "absolute",
+    threshold = 5,
+    minSamples = 1,
+    plot = F
+  )
+
+#normalise samples from sequencing depth to CPM
+undiluted.cpmnorm <- normaliseCounts(undiluted.filtered, method = "CPM")
+```
+
+##### Raw 
+```{r}
+#plot raw and normalised sequencing depth to get an idea of depth discrepancies between PCR replicates
+# raw counts per sample
+plotReadCounts(undiluted.filtered, group = "Type")
+```
+
+##### Normalised
+```{r}
+# normalised counts per sample
+plotReadCounts(undiluted.cpmnorm, group = "Type")
+```
+## Visualisation 
+```{r}
+#collapsing replicates
+undiluted.filtered.collapsed <- collapseReplicates(
+  undiluted.filtered,
+  group = "Type",
+  method = "mean"
+)
+```
+
+### Barcode Plot {.tabset}
+
+#### Diluted
+##### Individual
+```{r}
+plotBarcodeHistogram(diluted.filtered, topN = 15, alphaLowFreq = 1)
+```
+
+##### Collapsed
+```{r}
+plotBarcodeHistogram(diluted.filtered.collapsed, topN = 15, alphaLowFreq = 1)
+```
+
+#### Undiluted
+##### Individual
+```{r}
+plotBarcodeHistogram(undiluted.filtered, topN = 15, alphaLowFreq = 1)
+```
+
+##### Collapsed
+```{r}
+plotBarcodeHistogram(undiluted.filtered.collapsed, topN = 15, alphaLowFreq = 1)
+```

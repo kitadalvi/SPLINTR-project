@@ -19,12 +19,12 @@ library(readxl)
 
 ## Importing RNA barcode count data
 ```{r, echo=TRUE, warning=FALSE, message=FALSE}
-samplesheet <-readxl::read_excel("/Volumes/bioinf/home/ndalvi/SPLINTR/Data/samplesheet.xlsx")
+samplesheet <-readxl::read_excel("/Volumes/bioinf/home/ndalvi/SPLINTR/bulk_RNA_org38_org49/samplesheet.xlsx")
 samplesheet <- as.data.frame(samplesheet)
 rownames(samplesheet) <- samplesheet$sample
 
 #barcode DGE
-rawdata <- read.delim("/Volumes/bioinf/home/ndalvi/SPLINTR/Results/reverse_complement_2/counts/all_counts_combined.tsv", check.names = FALSE, stringsAsFactors = FALSE)
+rawdata <- read.delim("/Volumes/bioinf/home/ndalvi/SPLINTR/bulk_RNA_org38_org49/results/counts/all_counts_combined.tsv", check.names = FALSE, stringsAsFactors = FALSE)
 barcode_data <- DGEList(counts=rawdata[,2:5])
 rownames(barcode_data$counts)<- rawdata[,1]
 
@@ -37,7 +37,6 @@ barcode_data$samples$Batch <- samplesheet$Batch
 ### Barcode thresholds
 Visualizing the effect of different threshold parameters on barcode data for subsequent normalisation.
 ```{r, message=FALSE, warning=FALSE}
-
 #removing barcodes with no data 
 barcode_data <- barcode_data[rowSums(barcode_data$counts) != 0, ]
 

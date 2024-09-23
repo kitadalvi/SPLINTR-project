@@ -9,9 +9,13 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  - text: Visualisation
+    menu:
+    - text: plasmid SPLINTR
+      href: amplification_splintr.html
 output:
   workflowr::wflow_html:
     toc: yes
     toc_float: yes
-    theme: cosmo
+    theme: sandstone
     highlight: textmate
